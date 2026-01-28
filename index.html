@@ -5,84 +5,132 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Hirdetés forrás</title>
 
+<!-- Font Awesome ikonok -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 <style>
-/* A DESIGN NEM VÁLTOZOTT */
-body{margin:0;font-family:"Segoe UI",Arial,sans-serif;background:#f4f6f8;height:100vh;display:flex;align-items:center;justify-content:center}
-.container{width:90%;max-width:700px;text-align:center}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-h1{margin-bottom:30px}
-.btn{padding:26px;font-size:22px;border-radius:16px;color:#fff;border:0;display:flex;gap:14px;align-items:center}
-.facebook{background:#1877f2}
-.instagram{background:linear-gradient(45deg,#f58529,#dd2a7b,#8134af,#515bd4)}
-.google{background:#4285f4}
-.offline{background:#6c757d}
-.referral{background:#28a745}
-.other{background:#343a40}
-.thankyou{font-size:38px;font-weight:bold}
+body {
+  margin:0;
+  font-family:"Segoe UI",Arial,sans-serif;
+  background:#f4f6f8;
+  height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+}
+.container {
+  width:90%;
+  max-width:700px;
+  text-align:center;
+  animation:fadeIn 0.6s ease;
+}
+h1 {
+  font-size:32px;
+  margin-bottom:30px;
+  color:#222;
+}
+.grid {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:18px;
+}
+.btn {
+  position:relative;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:26px;
+  font-size:22px;
+  border-radius:16px;
+  color:white;
+  border:none;
+  cursor:pointer;
+  box-shadow:0 6px 16px rgba(0,0,0,0.12);
+  transition: transform 0.1s ease;
+}
+.btn i { font-size:30px; }
+.btn:active { transform:scale(0.96); }
+.facebook { background:#1877f2; }
+.instagram { background:linear-gradient(45deg,#f58529,#dd2a7b,#8134af,#515bd4); }
+.google { background:#4285f4; }
+.offline { background:#6c757d; }
+.referral { background:#28a745; }
+.other { background:#343a40; }
+.thankyou {
+  font-size:38px;
+  font-weight:bold;
+  animation:thankYouAnim 0.5s ease;
+}
+@keyframes fadeIn { from{opacity:0;} to{opacity:1;} }
+@keyframes thankYouAnim { from{opacity:0; transform:scale(0.9);} to{opacity:1; transform:scale(1);} }
 </style>
 </head>
-
 <body>
 
 <div class="container" id="main">
-<h1>Hol találkoztál a hirdetésünkkel?</h1>
-<div class="grid">
-<button class="btn facebook" onclick="send('Facebook')"><i class="fa-brands fa-facebook-f"></i>Facebook</button>
-<button class="btn instagram" onclick="send('Instagram')"><i class="fa-brands fa-instagram"></i>Instagram</button>
-<button class="btn google" onclick="send('Google')"><i class="fa-brands fa-google"></i>Google</button>
-<button class="btn offline" onclick="send('Plakát / Szórólap')">Plakát / Szórólap</button>
-<button class="btn referral" onclick="send('Ismerős ajánlotta')">Ismerős ajánlotta</button>
-<button class="btn other" onclick="send('Egyéb')">Egyéb</button>
-</div>
+  <h1>Hol találkoztál a hirdetésünkkel?</h1>
+  <div class="grid">
+    <button class="btn facebook" onclick="send('Facebook')"><i class="fa-brands fa-facebook-f"></i> Facebook</button>
+    <button class="btn instagram" onclick="send('Instagram')"><i class="fa-brands fa-instagram"></i> Instagram</button>
+    <button class="btn google" onclick="send('Google')"><i class="fa-brands fa-google"></i> Google</button>
+    <button class="btn offline" onclick="send('Plakát / Szórólap')"><i class="fa-solid fa-bullhorn"></i> Plakát / Szórólap</button>
+    <button class="btn referral" onclick="send('Ismerős ajánlotta')"><i class="fa-solid fa-user-group"></i> Ismerős ajánlotta</button>
+    <button class="btn other" onclick="send('Egyéb')"><i class="fa-solid fa-ellipsis"></i> Egyéb</button>
+  </div>
 </div>
 
-<div class="container" id="thanks" style="display:none">
-<div class="thankyou">Köszönjük! 🙌</div>
+<div class="container" id="thanks" style="display:none;">
+  <div class="thankyou">Köszönjük! 🙌</div>
 </div>
 
 <script>
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzl6MCAyNp5SoKjUCuml1gZr2HUAwJJ_ynb9jgd4g8HyPUVHrw55zAYZsGrE6dVDvsl/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx3p1q-56zK6ud1h0XTVyhwL9wQaa5uNyjhlQNZtnfFvfp3Jir4HBzWXUKol9VQwwyU/exec"; // cseréld az Apps Script /exec URL-re
 
-function send(source){
-  const entry={
-    shop:"Fő üzlet",
-    source:source,
-    time:new Date().toISOString()
+function send(source) {
+  const entry = {
+    shop: "Fő üzlet",
+    source: source,
+    time: new Date().toISOString()
   };
 
-  let q=JSON.parse(localStorage.getItem("queue")||"[]");
-  q.push(entry);
-  localStorage.setItem("queue",JSON.stringify(q));
+  // localStorage mentés
+  let queue = JSON.parse(localStorage.getItem("queue") || "[]");
+  queue.push(entry);
+  localStorage.setItem("queue", JSON.stringify(queue));
 
-  document.getElementById("main").style.display="none";
-  document.getElementById("thanks").style.display="block";
+  // UI váltás
+  document.getElementById("main").style.display = "none";
+  document.getElementById("thanks").style.display = "block";
 
-  setTimeout(()=>{
-    document.getElementById("thanks").style.display="none";
-    document.getElementById("main").style.display="block";
-  },3000);
+  setTimeout(() => {
+    document.getElementById("thanks").style.display = "none";
+    document.getElementById("main").style.display = "block";
+  }, 3000);
 
   flush();
 }
 
-function flush(){
-  let q=JSON.parse(localStorage.getItem("queue")||"[]");
-  if(!q.length || !navigator.onLine) return;
+// Küldi a sorokat, ha van internet
+function flush() {
+  let queue = JSON.parse(localStorage.getItem("queue") || "[]");
+  if (!queue.length || !navigator.onLine) return;
 
-  fetch(SCRIPT_URL,{
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
-    body:JSON.stringify(q)
-  }).then(r=>{
-    if(r.ok) localStorage.removeItem("queue");
-  });
+  fetch(SCRIPT_URL, {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify(queue)
+  })
+  .then(res => {
+    if(res.ok) localStorage.removeItem("queue");
+  })
+  .catch(err => { /* marad a queue-ben */ });
 }
 
-setInterval(flush,5000);
+// 5 másodpercenként próbálkozik, ha net van
+setInterval(flush, 5000);
 </script>
 
 </body>
 </html>
-
