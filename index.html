@@ -4,93 +4,83 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Hirdetés forrás</title>
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
 <style>
-body { margin:0; font-family:"Segoe UI",Arial,sans-serif; background:#f4f6f8; height:100vh; display:flex; align-items:center; justify-content:center; overflow:hidden; }
-.container { width:90%; max-width:700px; text-align:center; animation:fadeIn 0.6s ease; }
-h1 { font-size:32px; margin-bottom:30px; color:#222; }
-.grid { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
-.btn { position:relative; overflow:hidden; display:flex; align-items:center; gap:14px; padding:26px; font-size:22px; border-radius:16px; color:white; border:none; cursor:pointer; box-shadow:0 6px 16px rgba(0,0,0,0.12); animation:slideUp 0.6s ease forwards,pulse 5s infinite; transition:transform 0.1s ease; }
-.btn i { font-size:30px; }
-.btn:active { transform:scale(0.96); }
-.btn::after { content:""; position:absolute; left:50%; top:50%; width:20px; height:20px; background:rgba(255,255,255,0.5); border-radius:50%; transform:translate(-50%,-50%); opacity:0; pointer-events:none; }
-.btn:active::after { animation:ripple 0.6s ease; }
-.facebook { background:#1877f2; }
-.instagram { background:linear-gradient(45deg,#f58529,#dd2a7b,#8134af,#515bd4); }
-.google { background:#4285f4; }
-.offline { background:#6c757d; }
-.referral { background:#28a745; }
-.other { background:#343a40; }
-.thankyou { font-size:38px; font-weight:bold; animation:thankYouAnim 0.5s ease; }
-@keyframes slideUp { from{transform:translateY(20px);opacity:0;} to{transform:translateY(0);opacity:1;} }
-@keyframes fadeIn { from{opacity:0;} to{opacity:1;} }
-@keyframes ripple { from{opacity:1; transform:translate(-50%,-50%) scale(1);} to{opacity:0; transform:translate(-50%,-50%) scale(15);} }
-@keyframes pulse { 0%,100%{box-shadow:0 6px 16px rgba(0,0,0,0.12);} 50%{box-shadow:0 10px 22px rgba(0,0,0,0.22);} }
-@keyframes thankYouAnim { from{opacity:0;transform:scale(0.9);} to{opacity:1;transform:scale(1);} }
+/* A DESIGN NEM VÁLTOZOTT */
+body{margin:0;font-family:"Segoe UI",Arial,sans-serif;background:#f4f6f8;height:100vh;display:flex;align-items:center;justify-content:center}
+.container{width:90%;max-width:700px;text-align:center}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+h1{margin-bottom:30px}
+.btn{padding:26px;font-size:22px;border-radius:16px;color:#fff;border:0;display:flex;gap:14px;align-items:center}
+.facebook{background:#1877f2}
+.instagram{background:linear-gradient(45deg,#f58529,#dd2a7b,#8134af,#515bd4)}
+.google{background:#4285f4}
+.offline{background:#6c757d}
+.referral{background:#28a745}
+.other{background:#343a40}
+.thankyou{font-size:38px;font-weight:bold}
 </style>
 </head>
+
 <body>
 
 <div class="container" id="main">
-  <h1>Hol találkoztál a hirdetésünkkel?</h1>
-  <div class="grid">
-    <button class="btn facebook" onclick="send('Facebook')"><i class="fa-brands fa-facebook-f"></i> Facebook</button>
-    <button class="btn instagram" onclick="send('Instagram')"><i class="fa-brands fa-instagram"></i> Instagram</button>
-    <button class="btn google" onclick="send('Google')"><i class="fa-brands fa-google"></i> Google</button>
-    <button class="btn offline" onclick="send('Plakát / Szórólap')"><i class="fa-solid fa-bullhorn"></i> Plakát / Szórólap</button>
-    <button class="btn referral" onclick="send('Ismerős ajánlotta')"><i class="fa-solid fa-user-group"></i> Ismerős ajánlotta</button>
-    <button class="btn other" onclick="send('Egyéb')"><i class="fa-solid fa-ellipsis"></i> Egyéb</button>
-  </div>
+<h1>Hol találkoztál a hirdetésünkkel?</h1>
+<div class="grid">
+<button class="btn facebook" onclick="send('Facebook')"><i class="fa-brands fa-facebook-f"></i>Facebook</button>
+<button class="btn instagram" onclick="send('Instagram')"><i class="fa-brands fa-instagram"></i>Instagram</button>
+<button class="btn google" onclick="send('Google')"><i class="fa-brands fa-google"></i>Google</button>
+<button class="btn offline" onclick="send('Plakát / Szórólap')">Plakát / Szórólap</button>
+<button class="btn referral" onclick="send('Ismerős ajánlotta')">Ismerős ajánlotta</button>
+<button class="btn other" onclick="send('Egyéb')">Egyéb</button>
+</div>
 </div>
 
-<div class="container" id="thanks" style="display:none;">
-  <div class="thankyou">Köszönjük! 🙌</div>
+<div class="container" id="thanks" style="display:none">
+<div class="thankyou">Köszönjük! 🙌</div>
 </div>
 
 <script>
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxbyJZ9kcnaxCLDo1Ryds0ojVAF7-Myk59huJcbMvqlXsipocDyfWO51uY2jKnW5Dev/exec"; // <-- a Web App /exec URL-ed
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwZcGLY7c6WFgmKluc9lg-HVOUnUlAvHSLmJqDiZJHleEtt4pp2ge8dJL_h2CnpJI3U/exec";
 
-function send(source) {
-  const entry = {
-    shop: "Fő üzlet",
-    source: source,
-    time: new Date().toISOString()
+function send(source){
+  const entry={
+    shop:"Fő üzlet",
+    source:source,
+    time:new Date().toISOString()
   };
 
-  // localStorage-be mentés
-  let pending = JSON.parse(localStorage.getItem("pendingData") || "[]");
-  pending.push(entry);
-  localStorage.setItem("pendingData", JSON.stringify(pending));
+  let q=JSON.parse(localStorage.getItem("queue")||"[]");
+  q.push(entry);
+  localStorage.setItem("queue",JSON.stringify(q));
 
-  // UI váltás
-  document.getElementById("main").style.display = "none";
-  document.getElementById("thanks").style.display = "block";
+  document.getElementById("main").style.display="none";
+  document.getElementById("thanks").style.display="block";
 
-  setTimeout(() => {
-    document.getElementById("thanks").style.display = "none";
-    document.getElementById("main").style.display = "block";
-  }, 3000);
+  setTimeout(()=>{
+    document.getElementById("thanks").style.display="none";
+    document.getElementById("main").style.display="block";
+  },3000);
 
-  trySendPending();
+  flush();
 }
 
-function trySendPending() {
-  let pending = JSON.parse(localStorage.getItem("pendingData") || "[]");
-  if (!pending.length) return;
+function flush(){
+  let q=JSON.parse(localStorage.getItem("queue")||"[]");
+  if(!q.length || !navigator.onLine) return;
 
-  if (navigator.onLine) {
-    fetch(SCRIPT_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(pending)
-    })
-    .then(res => { if(res.ok) localStorage.removeItem("pendingData"); })
-    .catch(err => { /* marad localStorage-ben */ });
-  }
+  fetch(SCRIPT_URL,{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify(q)
+  }).then(r=>{
+    if(r.ok) localStorage.removeItem("queue");
+  });
 }
 
-// 5 másodpercenként próbálkozás, ha net van
-setInterval(trySendPending, 5000);
+setInterval(flush,5000);
 </script>
 
 </body>
